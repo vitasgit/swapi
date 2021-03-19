@@ -1,3 +1,32 @@
+//тема приложения
+let theme = {
+  themeType:'indigo-theme',
+  secondaryColor:'#4ebdd4',
+  update:function () {
+      document.getElementById('edit').style.backgroundColor = this.secondaryColor;
+      $('.content-wrapper')[0].classList.value = `content-wrapper ${this.themeType}`;
+      document.getElementById('nav').classList.value = `nav-wrapper navbar-fixed ${this.themeType}`;
+      $('.menu-btn')[0].childNodes.forEach(el => {
+         if (el.nodeType!==3){
+             el.style.backgroundColor = this.secondaryColor;
+         }
+      });
+      localStorage.setItem('secondaryColor',this.secondaryColor);
+      localStorage.setItem('themeType',this.themeType);
+  }
+};
+
+document.addEventListener('DOMContentLoaded',function () {
+    let sColor = localStorage.getItem('secondaryColor');
+    let themeType = localStorage.getItem('themeType');
+
+    if (sColor!==null && themeType!==null){
+        theme.secondaryColor = sColor;
+        theme.themeType = themeType;
+    }
+    theme.update();
+});
+
 $(function(){
     var includes = $('[data-include]');
     //document.querySelector("[data-include]").innerText;
@@ -60,4 +89,15 @@ $('.theme-select').on('click',function () {
         preview[0].classList.value = 'preview-wrapper black-theme';
         themePreview.themeType = 'black-theme';
     }
+});
+
+$('.radio-item>label>span').on('click',function () {
+    prewiewChild().forEach(el => el.style.backgroundColor = this.style.color);
+    themePreview.secondaryColor = this.style.color;
+});
+
+$('#save-theme-btn').on('click',function () {
+   theme.themeType = themePreview.themeType;
+   theme.secondaryColor = themePreview.secondaryColor;
+   theme.update();
 });
