@@ -7,6 +7,21 @@ $(function(){
     });
 });
 
-$('.menu-btn').on('click',function () {
+$('.menu-btn').on('click', function() {
    $('.menu-wrapper').slideToggle('slow');
+});
+
+let editPopup = document.querySelectorAll('.edit-popup');
+let editPopupSwitcher = false;
+
+$('#edit').on('click', function() {
+	editPopupSwitcher = !editPopupSwitcher;
+	this.classList.remove('pulse');
+
+	if (editPopupSwitcher){
+      TweenMax.to(editPopup,1,{x:'2%',display:'block',height:'65vh',ease:Back.easeOut});
+      } 
+  	else {
+        TweenMax.to(editPopup,1,{x:'-200%',display:'block',height:'0vh',ease:Power3.easeOut});
+      }
 });
